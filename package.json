@@ -1,0 +1,86 @@
+{
+  "name": "jumptrace",
+  "displayName": "jumptrace",
+  "description": "File line mapping",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.100.3"
+  },
+  "categories": [
+    "Other"
+  ],
+    "activationEvents": [
+    "*" 
+  ],
+  "main": "./out/extension1.js",
+  "contributes": 
+  {
+    "commands": 
+    [
+      {
+        "command": "jumptrace.open",
+        "title": "open.jumptrace",
+        "icon": "$(file-code)" 
+      },
+      {
+        "command": "jumptrace.Reverse_opening",
+        "title": "Reverse_opening.jumptrace",
+        "icon": "$(file-code)" 
+      }
+    ],
+    "configuration": 
+    {
+      "title": "jumptrace", 
+      "properties": 
+      {
+        "jumptrace.file_path": 
+        {
+          "type": "string",
+          "default": 0,
+          "description": "Target file path"
+        },
+          "jumptrace.highlightBackgroundColor": {
+          "type": "string",
+          "default": "rgba(131, 247, 95, 0.3)",
+          "description": "The background color of the highlighted row",
+          "scope": "resource"
+        }
+      }
+    },
+    "menus": 
+    {
+      "editor/title": 
+      [ 
+        {
+          "command": "jumptrace.open", 
+          "group": "navigation@1"
+        },
+        {
+          "command": "jumptrace.Reverse_opening", 
+          "group": "navigation@1"
+        }
+      ]
+    }
+    
+  },
+  
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.100.3",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}

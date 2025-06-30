@@ -1,0 +1,11 @@
+{
+    "myExtension.toggleFeature.title": "我的扩展：切换功能",
+    "myExtension.config.file.description": "指定包含文件路径和行号信息的配置文件路径。支持使用 $workspaceFolder 作为工作区根目录。",
+    "myExtension.config.fileType.description": "指定插件功能在哪些语言类型的文件中启用。",
+    "messages.fileNotFound": "文件未找到: {0}",
+    "messages.couldNotOpenFileOrJump": "无法打开文件或跳转: {0}",
+    "messages.highlightCleared": "高亮已清除。",
+    "messages.featureEnabled": "插件功能已启用。",
+    "messages.featureDisabled": "插件功能已禁用。",
+    "messages.noActiveEditor": "没有活动的文本编辑器。"
+}
