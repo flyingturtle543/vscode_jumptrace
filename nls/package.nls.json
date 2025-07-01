@@ -1,0 +1,20 @@
+{
+    "fileNotFound": "File not found: {0}",
+    "failedToReadFile": "Failed to read file: {0} - {1}",
+    "cannotOpenFileOrJump": "Cannot open file or jump: {0}",
+    "failedToHighlightLines": "Failed to highlight lines: {0}",
+    "fileOpened": "File has been opened",
+    "mappingEnabled": "Mapping enabled",
+    "dualFileMappingEnabled": "Dual file mapping enabled",
+    "configReloaded": "JumpTrace Configuration has been reloaded.",
+    "dualFileMappingDisabled": "Dual file mapping disabled",
+    "extensionDisplayName": "JumpTrace",
+    "extensionDescription": "File line mapping for VS Code.",
+    "commandOpenFileTitle": "Open Mapped File",
+    "commandSwitchoverTitle": "Switch Mapping Mode",
+    "configurationTitle": "JumpTrace Configuration",
+    "configFilePathDescription": "Target file path for mapping data.",
+    "configHighlightBackgroundColorDescription": "The background color of the highlighted row.",
+    "configPathRegexDescription": "Regex to filter lines that contain file paths and line numbers.",
+    "configSkipRegexDescription": "Regex to skip lines from parsing."
+}

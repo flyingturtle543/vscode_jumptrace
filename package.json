@@ -9,61 +9,62 @@
   "categories": [
     "Other"
   ],
-    "activationEvents": [
-    "*" 
+  "activationEvents": [
+    "*"
   ],
-  "main": "./out/extension1.js",
-  "contributes": 
-  {
-    "commands": 
-    [
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
       {
-        "command": "jumptrace.open",
-        "title": "open.jumptrace",
-        "icon": "$(file-code)" 
+        "command": "jumptrace.openfile",
+        "title": "openfile.jumptrace",
+        "icon": "$(file-code)"
       },
       {
-        "command": "jumptrace.Reverse_opening",
-        "title": "Reverse_opening.jumptrace",
-        "icon": "$(file-code)" 
+        "command": "jumptrace.switchover",
+        "title": "switchover.jumptrace",
+        "icon": "$(file-code)"
       }
     ],
-    "configuration": 
-    {
-      "title": "jumptrace", 
-      "properties": 
-      {
-        "jumptrace.file_path": 
-        {
+    "configuration": {
+      "title": "jumptrace",
+      "properties": {
+        "jumptrace.file_path": {
           "type": "string",
           "default": 0,
           "description": "Target file path"
         },
-          "jumptrace.highlightBackgroundColor": {
+        "jumptrace.highlightBackgroundColor": {
           "type": "string",
           "default": "rgba(131, 247, 95, 0.3)",
           "description": "The background color of the highlighted row",
           "scope": "resource"
+        },
+        "jumptrace.pathRegex": {
+          "type": "string",
+          "default": " ",
+          "description": "Filter the rows that match the path"
+        },
+        "jumptrace.skipRegex": {
+          "type": "string",
+          "default": "^ ",
+          "description": "Skipped lines"
         }
       }
     },
-    "menus": 
-    {
-      "editor/title": 
-      [ 
+    "menus": {
+      "editor/title": [
         {
-          "command": "jumptrace.open", 
+          "command": "jumptrace.openfile",
           "group": "navigation@1"
         },
         {
-          "command": "jumptrace.Reverse_opening", 
+          "command": "jumptrace.switchover",
           "group": "navigation@1"
         }
       ]
     }
-    
   },
-  
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",

@@ -3,6 +3,10 @@ import * as vscode from 'vscode';
 
 let _channel: vscode.OutputChannel | undefined;
 
+
+    // 初始化日志模块
+//Logger.initializeLogger("jumptrace");
+//context.subscriptions.push({ dispose: () => Logger.dispose() });
 export class Logger {
     /**
      * 初始化日志模块。必须在插件激活时调用一次。

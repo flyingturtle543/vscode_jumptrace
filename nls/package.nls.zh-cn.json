@@ -1,0 +1,20 @@
+{
+    "fileNotFound": "文件未找到: {0}",
+    "failedToReadFile": "读取文件失败: {0} - {1}",
+    "cannotOpenFileOrJump": "无法打开文件或跳转: {0}",
+    "failedToHighlightLines": "高亮行失败: {0}",
+    "fileOpened": "已打开文件",
+    "mappingEnabled": "已打开映射",
+    "dualFileMappingEnabled": "已打开双文件映射",
+    "dualFileMappingDisabled": "已关闭双文件映射",
+    "configReloaded": "配置已重新加载",
+    "extensionDisplayName": "跳转追踪",
+    "extensionDescription": "VS Code 文件行映射工具。",
+    "commandOpenFileTitle": "打开映射文件",
+    "commandSwitchoverTitle": "切换映射模式",
+    "configurationTitle": "跳转追踪配置",
+    "configFilePathDescription": "用于映射数据的目标文件路径。",
+    "configHighlightBackgroundColorDescription": "高亮行的背景颜色。",
+    "configPathRegexDescription": "用于匹配文件路径和行号的正则表达式。",
+    "configSkipRegexDescription": "需要跳过的行正则表达式。"
+}

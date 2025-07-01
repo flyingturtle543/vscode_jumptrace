@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
-import { setIsProgrammaticSelectionChange } from './extension';
+import { decrementProgrammaticChange, incrementProgrammaticChange } from './extension';
 
 /**
  * 存储文件位置数据的接口。
@@ -47,8 +47,8 @@ export async function extractFileLocations(
                 if (!lineMap) {
                     lineMap = new Map<number, FileLocationData>();
                     fileLocationsMap.set(filePath, lineMap);}
-                lineMap.set(lineNumber, { originalFileIndex: i, highlightLineCount: lastMatchedLineIndex - i });
 
+                lineMap.set(lineNumber, { originalFileIndex: i, highlightLineCount: lastMatchedLineIndex - i });
                 lastMatchedLineIndex = i;
             } else {lastMatchedLineIndex = i;}
         }
@@ -88,7 +88,7 @@ export function getActiveEditorFilePath(osName: string,filePath: string): string
 
 export async function openFileAndJumpToLine(file:string, y: number): Promise<vscode.TextEditor | undefined> 
 {
-    setIsProgrammaticSelectionChange(true);
+    incrementProgrammaticChange();
     try
     {
         const fileUri = vscode.Uri.file(file);
@@ -131,9 +131,7 @@ export async function openFileAndJumpToLine(file:string, y: number): Promise<vsc
         vscode.window.showErrorMessage(`无法打开文件或跳转: ${error.message}`);
         return undefined;
     } finally {
-        setTimeout(() => {
-            setIsProgrammaticSelectionChange(false);
-        }, 0); // 0ms 延迟
+        decrementProgrammaticChange();
     }
 }
 
