@@ -10,19 +10,19 @@
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "onCommand:jumptrace.switchover" 
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "jumptrace.openfile",
-        "title": "openfile.jumptrace",
+        "command": "jumptrace.close",
+        "title": "jumptrace.close",
         "icon": "$(file-code)"
       },
       {
         "command": "jumptrace.switchover",
-        "title": "switchover.jumptrace",
+        "title": "jumptrace.switchover",
         "icon": "$(file-code)"
       }
     ],
@@ -51,18 +51,6 @@
           "description": "Skipped lines"
         }
       }
-    },
-    "menus": {
-      "editor/title": [
-        {
-          "command": "jumptrace.openfile",
-          "group": "navigation@1"
-        },
-        {
-          "command": "jumptrace.switchover",
-          "group": "navigation@1"
-        }
-      ]
     }
   },
   "scripts": {

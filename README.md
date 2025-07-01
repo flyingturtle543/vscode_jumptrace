@@ -1,71 +1,64 @@
-# helloworld README
+# 调试信息文件行号高亮插件
 
-This is the README for your extension "helloworld". After writing up a brief description, we recommend including the following sections.
+本插件是一款专为开发者设计的代码编辑器扩展，旨在通过可视化方式增强调试体验。它能够智能解析调试输出中的汇编指令地址与源代码文件行号之间的关联，并在您的代码编辑器中实现双向高亮和导航，帮助您更快速、直观地理解程序执行流程。
 
-## Features
+## 功能特性
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+* **智能调试信息解析**: 自动识别并解析调试工具（如GDB、LLDB等）输出的调试信息，提取其中的文件路径、行号以及对应的汇编指令地址。
+* **源代码行号高亮**: 根据解析到的调试信息，在代码编辑器中精确高亮显示当前调试点或选定汇编指令所对应的源代码行，提供即时视觉反馈。
+* **汇编与源代码双向映射**:
+    * **从汇编到源代码**: 当您在调试视图中选择一条汇编指令时，插件会自动跳转到并高亮显示其在源代码文件中的对应行。
+    * **从源代码到汇编**: 当您在源代码文件中选择一行代码时，插件可以显示或导航到与之关联的汇编指令（如果调试信息中包含此映射）。
+流。
+## 示例
+**插件解析与视觉效果:**
 
-For example if there is an image subfolder under your extension project workspace:
+插件会识别出文件路径 `D:/data/100_flyingturtle/2_code/c++/windows/source/template/final/build/vcpkg_installed/x64-mingw-dynamic/include/boost/asio/execution_context.hpp` 和行号 `119`。它会将这些信息与汇编地址 `14000148b` 关联起来。
 
-\!\[feature X\]\(images/feature-x.png\)
+当鼠标点击在 `14000148b` 地址时，插件会在您的代码编辑器中自动打开或切换到 `execution_context.hpp` 文件，并将第 `119` 行进行高亮显示，如下图所示（示例图，实际效果可能因编辑器主题而异）：
+![alt text](image-1.png)
+反之，如果您在源代码中点击了第 `119` 行，插件可以跳转到调试输出中对应的汇编指令并高亮。
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## 安装与使用
 
-## Requirements
+1.  **安装**:
+    * **通过VS Code Marketplace**: 在VS Code中打开扩展视图（`Ctrl+Shift+X`），搜索“jumptrace”，然后点击“安装”。
+    * **手动安装（VSIX）**: 如果您有插件的 `.vsix` 文件，可以在VS Code中通过“从VSIX安装”选项进行安装。
+2.  **配置**:
+    * 插件的行为可以通过VS Code的用户或工作区设置进行自定义。详情请参阅下面的“配置示例”部分。
+    * 确保您的项目工作区已正确加载，以便插件能够定位到源代码文件。
+3.  **使用**:
+    * 启动您的调试会话。
+    * **打开目标文件**: 您可以通过命令面板（`Ctrl+Shift+P`）运行 `openfile.jumptrace` 命令，打开配置中指定的目标文件 (`jumptrace.file_path`)。
+    * **切换映射模式**: 通过 `switchover.jumptrace` 命令或其图标，可以在不同的映射模式之间切换（单向映射、双向映射、禁用映射）。
+    * 当调试器输出包含文件路径和行号的调试信息时，点击行号，插件将自动在代码编辑器中高亮显示相应的源代码行与汇编代码。
+    * 通过在汇编视图或源代码视图中进行选择，插件将根据您的模式配置执行相应的跳转或高亮操作。
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## 配置示例
+您可以在VS Code的 `settings.json` 文件中配置 `jumptrace` 插件的行为。以下是可用的配置项及其示例：
 
-## Extension Settings
+```json
+{
+    // 目标文件路径，通常是调试输出或包含映射关系的文件
+    // 支持使用 $workspaceFolder 变量，例如 "$workspaceFolder/build/debug_output.log"
+    "jumptrace.file_path": "/path/to/your/debug_info_file.log",
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+    // 高亮行的背景颜色，可以使用CSS颜色格式（如rgba, #RRGGBB等）
+    "jumptrace.highlightBackgroundColor": "rgba(131, 247, 95, 0.3)",
 
-For example:
+    // 用于匹配调试输出路径和行号的正则表达式
+    // 如果您的调试输出格式特殊，请自定义此项。
+    "jumptrace.pathRegex": "^([A-Za-z]:[\\\\/].*?):(\\d+)$",
 
-This extension contributes the following settings:
+    // 用于跳过调试输出中不相关行的正则表达式
+    // 匹配此正则表达式的行将不会被插件处理。默认跳过以空格开头的行。
+    "jumptrace.skipRegex": "^\\s+",
+}
+```
+## 贡献
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+我们欢迎任何形式的贡献！如果您有功能建议、发现了bug或者希望提交代码，请随时访问我们的 [GitHub仓库地址] 并在“Issues”或“Pull Requests”中提出。
 
-## Known Issues
+## 许可证
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+本插件根据 [例如：MIT许可证] 发布。详情请参阅 `LICENSE` 文件。

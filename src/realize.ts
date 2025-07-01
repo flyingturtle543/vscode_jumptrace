@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
-import { decrementProgrammaticChange, incrementProgrammaticChange } from './extension';
+
 
 /**
  * 存储文件位置数据的接口。
@@ -25,7 +25,7 @@ export async function extractFileLocations(
 ): Promise<void> {
 
     if (!fs.existsSync(configFilePath)) {
-        vscode.window.showErrorMessage(`文件未找到: ${configFilePath}`);
+        vscode.window.showErrorMessage(`Failed to read file: ${configFilePath}`);
         return;
     }
 
@@ -54,7 +54,7 @@ export async function extractFileLocations(
         }
 
     } catch (error: any) {
-        vscode.window.showErrorMessage(`读取文件失败: ${configFilePath} - ${error.message}`);
+        vscode.window.showErrorMessage(`Failed to read file: ${configFilePath} - ${error.message}`);
     }
 }
 
@@ -88,7 +88,7 @@ export function getActiveEditorFilePath(osName: string,filePath: string): string
 
 export async function openFileAndJumpToLine(file:string, y: number): Promise<vscode.TextEditor | undefined> 
 {
-    incrementProgrammaticChange();
+   
     try
     {
         const fileUri = vscode.Uri.file(file);
@@ -128,10 +128,8 @@ export async function openFileAndJumpToLine(file:string, y: number): Promise<vsc
 
     } catch (error: any)
     {
-        vscode.window.showErrorMessage(`无法打开文件或跳转: ${error.message}`);
+        vscode.window.showErrorMessage(`Cannot open file or jump: ${error.message}`);
         return undefined;
-    } finally {
-        decrementProgrammaticChange();
     }
 }
 
@@ -161,7 +159,7 @@ export async function highlightLines(
         editor.setDecorations(decorationType, decorations);
         return ;
     } catch (error: any) {
-        vscode.window.showErrorMessage(`高亮行失败: ${error.message}`);
+        vscode.window.showErrorMessage(`Failed to highlight lines: ${error.message}`);
         return ;
     }
 }
