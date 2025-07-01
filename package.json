@@ -1,14 +1,38 @@
 {
   "name": "jumptrace",
-  "displayName": "jumptrace",
-  "description": "File line mapping",
+  "displayName": "Jumptrace: Debug Info Highlighter",
+  "description": "A VS Code extension designed for developers, aiming to enhance the debugging experience through visualization. This plugin intelligently parses the correlation between assembly instruction addresses and source code line numbers from debug output (e.g., GDB, LLDB). It provides powerful bidirectional highlighting and navigation functionalities.",
   "version": "0.0.1",
+  "publisher": "flyingturtleovo", 
+  "icon": "jumptrace.png",
   "engines": {
     "vscode": "^1.100.3"
   },
+
+  "keywords": [ 
+    "debug",
+    "assembly",
+    "source code",
+    "highlight",
+    "jump",
+    "trace",
+    "gdb",
+    "lldb",
+    "reverse engineering" 
+  ],
+
   "categories": [
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flyingturtle543/vscode_jumptrace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/flyingturtle543/vscode_jumptrace/issues"
+  },
+  "homepage": "https://github.com/flyingturtle543/vscode_jumptrace#readme",
+
   "activationEvents": [
     "onCommand:jumptrace.switchover" 
   ],
@@ -17,13 +41,13 @@
     "commands": [
       {
         "command": "jumptrace.close",
-        "title": "jumptrace.close",
-        "icon": "$(file-code)"
+        "title": "Jumptrace: Close Mapping", 
+        "icon": "$(close)"
       },
       {
         "command": "jumptrace.switchover",
-        "title": "jumptrace.switchover",
-        "icon": "$(file-code)"
+        "title": "Jumptrace: Toggle Mapping Mode",
+        "icon": "$(sync)"
       }
     ],
     "configuration": {
@@ -31,7 +55,7 @@
       "properties": {
         "jumptrace.file_path": {
           "type": "string",
-          "default": 0,
+          "default": "",
           "description": "Target file path"
         },
         "jumptrace.highlightBackgroundColor": {
