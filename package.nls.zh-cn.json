@@ -1,0 +1,11 @@
+{
+  "extension.displayName": "Jumptrace: 调试信息高亮器",
+  "extension.description": "一款专为开发者设计的 VS Code 扩展，旨在通过可视化方式增强调试体验。它能够智能解析调试输出中的汇编指令地址与源代码文件行号之间的关联，并实现强大的双向高亮和导航功能。",
+  "jumptrace.close.title": "Jumptrace: 关闭映射",
+  "jumptrace.switchover.title": "Jumptrace: 切换映射模式",
+  "configuration.title": "Jumptrace 配置",
+  "jumptrace.file_path.description": "调试输出文件路径，包含汇编-源代码映射。支持 $workspaceFolder 变量(例如“$workspaceFolder/build/debug_output.log”)。",
+  "jumptrace.highlightBackgroundColor.description": "高亮行的背景颜色，可以使用 CSS 颜色格式（如 rgba, #RRGGBB 等）。",
+  "jumptrace.pathRegex.description": "用于匹配调试输出中文件路径和行号的正则表达式。如果您的调试输出格式特殊，请自定义此项。",
+  "jumptrace.skipRegex.description": "用于跳过调试输出中不相关行的正则表达式。匹配此正则表达式的行将不会被插件处理。默认跳过以空格开头的行。"
+}

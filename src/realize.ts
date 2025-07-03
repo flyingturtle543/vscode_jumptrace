@@ -34,9 +34,9 @@ export async function extractFileLocations(
     }
 
     try {
-        const fileContent = await fs.promises.readFile(configFilePath, 'utf8');
+        let fileContent = await fs.promises.readFile(configFilePath, 'utf8');
+        fileContent = fileContent.replace(/\u0000/g, '');
         const lines = fileContent.split(/\r?\n/);
-
         let lastMatchedLineIndex = lines.length; // Tracks the index of the last line that matched the regex. 跟踪最后一个匹配到正则表达式的行的索引。
         // Iterate through the lines in reverse to correctly calculate highlightLineCount.
         // 反向遍历行，以便正确计算 highlightLineCount。

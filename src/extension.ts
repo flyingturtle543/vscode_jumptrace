@@ -142,12 +142,12 @@ export async function activate(context: vscode.ExtensionContext) {
             extensionConfig.isInterceptingEvents = true; // Prevent other events during this operation. 在此操作期间阻止其他事件。
             extensionConfig.isSingleMappingEnabled = true; // Re-enable single mapping default. 重新启用单向映射默认设置。
             extensionConfig.isDoubleMappingEnabled = true; // Re-enable double mapping default. 重新启用双向映射默认设置。
-            extensionConfig.isDoubleMappingActive = true; // Set double mapping as default active. 将双向映射设置为默认活动。
+            extensionConfig.isDoubleMappingActive = true; // Set mapping as default active. 将开关状态设为默认。
 
             // Clear highlights if active.
             // 如果高亮处于活动状态，则清除高亮。
-            if (masterFileState.isHighlighted) { masterFileState.editor!.setDecorations(extensionConfig.highlightDecorationType, []); masterFileState.isHighlighted = false; }
-            if (assistantFileState.isHighlighted) { assistantFileState.editor!.setDecorations(extensionConfig.highlightDecorationType, []); assistantFileState.isHighlighted = false; }
+            if (masterFileState.isHighlighted && masterFileState.editor) { masterFileState.editor.setDecorations(extensionConfig.highlightDecorationType, []); masterFileState.isHighlighted = false; }
+            if (assistantFileState.isHighlighted && assistantFileState.editor) { assistantFileState.editor.setDecorations(extensionConfig.highlightDecorationType, []); assistantFileState.isHighlighted = false; }
             vscode.window.showInformationMessage('Mapping has been turned off'); // Inform the user. 通知用户。
         } finally {
             extensionConfig.isInterceptingEvents = false; // Allow events again. 再次允许事件。
@@ -165,8 +165,8 @@ export async function activate(context: vscode.ExtensionContext) {
                 extensionConfig.isSingleMappingEnabled = false; // Enable single mapping. 启用单向映射。
                 vscode.window.showInformationMessage('Single mapping has been enabled');
             } else {
-                extensionConfig.isSingleMappingEnabled = false; // Disable single mapping. 禁用单向映射。
-                extensionConfig.isDoubleMappingEnabled = false; // Disable double mapping to activate it again later. 禁用双向映射以便稍后再次激活。
+                extensionConfig.isSingleMappingEnabled = false; // Enable single mapping. 启用单向映射。
+                extensionConfig.isDoubleMappingEnabled = false; // Enable double mapping. 启用双向映射。
                 vscode.window.showInformationMessage('Double mapping has been activated');
             }
 
@@ -182,12 +182,14 @@ export async function activate(context: vscode.ExtensionContext) {
                 assistantFileState.editor = masterFileState.editor; // Initially, assistant editor is the same as master. 初始时，辅助编辑器与主编辑器相同。
             }
 
-            if (!masterFileState.document) { return; } // If master document is not available, exit. 如果主文档不可用，则退出。
+            if (!masterFileState.document || !masterFileState.editor) { return; } // If master document is not available, exit. 如果主文档不可用，则退出。
 
             // Ensure the master file editor is visible.
             // 确保主文件编辑器可见。
             let editor: vscode.TextEditor | undefined = vscode.window.visibleTextEditors.find(
-                e => e.document.uri.fsPath === masterFileState.editor?.document.uri.fsPath
+                e => {
+                    if (!masterFileState.editor) {return false;}
+                    return e.document.uri.fsPath === masterFileState.editor.document.uri.fsPath;}
             );
             if (!editor) {
                 masterFileState.editor = await vscode.window.showTextDocument(masterFileState.document, {
@@ -246,7 +248,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 if (!FileLocationCache.locationData) { return; } // No mapping for this line, exit. 此行无映射，退出。
                 // Reveal the corresponding line in the master file.
                 // 显示主文件中的对应行。
-                masterFileState.editor.revealRange(masterFileState.updateRange(FileLocationCache.locationData!.originalFileIndex), vscode.TextEditorRevealType.InCenterIfOutsideViewport);
+                masterFileState.editor.revealRange(masterFileState.updateRange(FileLocationCache.locationData.originalFileIndex), vscode.TextEditorRevealType.InCenterIfOutsideViewport);
             }
             // Logic for when the master file (config file) selection changes in double mapping mode.
             // 双向映射模式下，当主文件（配置文件）选择改变时的逻辑。
@@ -256,7 +258,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 // 在主文件中向上搜索匹配的路径。
                 for (let i = masterFileState.editor.selection.active.line; i >= 0; i--) {
                     if (masterFileState.editor.document.lineAt(i).text.match(extensionConfig.skipRegex)) { continue; } // Skip lines. 跳过行。
-                    let pathMatch = masterFileState.editor.document.lineAt(i).text.match(extensionConfig.pathRegex!);
+                    let pathMatch = masterFileState.editor.document.lineAt(i).text.match(extensionConfig.pathRegex);
                     if (pathMatch && pathMatch.length >= 3) {
                         // If the path matches the current assistant file.
                         // 如果路径与当前辅助文件匹配。
@@ -290,8 +292,9 @@ export async function activate(context: vscode.ExtensionContext) {
 
             // Apply highlights to both editors.
             // 对两个编辑器应用高亮。
-            highlightLines(assistantFileState.editor, assistantFileState.currentLineNumber!, 1, extensionConfig.highlightDecorationType);
-            highlightLines(masterFileState.editor, FileLocationCache.locationData!.originalFileIndex, FileLocationCache.locationData!.highlightLineCount, extensionConfig.highlightDecorationType);
+            if (!FileLocationCache.locationData || !assistantFileState.currentLineNumber)  { return; } // No mapping for this line, exit. 此行无映射，退出
+            highlightLines(assistantFileState.editor, assistantFileState.currentLineNumber, 1, extensionConfig.highlightDecorationType);
+            highlightLines(masterFileState.editor, FileLocationCache.locationData.originalFileIndex, FileLocationCache.locationData.highlightLineCount, extensionConfig.highlightDecorationType);
             masterFileState.isHighlighted = true;
             assistantFileState.isHighlighted = true;
         } catch (error: any) {
@@ -374,8 +377,8 @@ export async function activate(context: vscode.ExtensionContext) {
 export function deactivate() {
     // Clear any active highlights.
     // 清除任何活动高亮。
-    if (masterFileState.isHighlighted) { masterFileState.editor!.setDecorations(extensionConfig.highlightDecorationType, []); masterFileState.isHighlighted = false; }
-    if (assistantFileState.isHighlighted) { assistantFileState.editor!.setDecorations(extensionConfig.highlightDecorationType, []); assistantFileState.isHighlighted = false; }
+    if (masterFileState.isHighlighted && masterFileState.editor) { masterFileState.editor.setDecorations(extensionConfig.highlightDecorationType, []); masterFileState.isHighlighted = false; }
+    if (assistantFileState.isHighlighted && assistantFileState.editor) { assistantFileState.editor.setDecorations(extensionConfig.highlightDecorationType, []); assistantFileState.isHighlighted = false; }
 
     // Dispose the decoration type to release resources.
     // 释放装饰类型以释放资源。

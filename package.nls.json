@@ -1,0 +1,11 @@
+{
+  "extension.displayName": "Jumptrace: Debug Info Highlighter",
+  "extension.description": "A VS Code extension designed for developers, aiming to enhance the debugging experience through visualization. This plugin intelligently parses the correlation between assembly instruction addresses and source code line numbers from debug output (e.g., GDB, LLDB). It provides powerful bidirectional highlighting and navigation functionalities.",
+  "jumptrace.close.title": "Jumptrace: Close Mapping",
+  "jumptrace.switchover.title": "Jumptrace: Toggle Mapping Mode",
+  "configuration.title": "Jumptrace Configuration",
+  "jumptrace.file_path.description": "Path to the debug output file containing assembly-source mapping. Supports $workspaceFolder variable (e.g., \"$workspaceFolder/build/debug_output.log\").",
+  "jumptrace.highlightBackgroundColor.description": "Background color for highlighted lines. Can use CSS color formats (e.g., rgba, #RRGGBB).",
+  "jumptrace.pathRegex.description": "Regular expression used to match file paths and line numbers in the debug output. Customize if your debug output format is specific.",
+  "jumptrace.skipRegex.description": "Regular expression used to skip irrelevant lines in the debug output. Lines matching this regex will not be processed by the extension. Default skips lines starting with whitespace."
+}

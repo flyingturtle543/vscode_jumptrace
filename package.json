@@ -1,7 +1,7 @@
 {
   "name": "jumptrace",
-  "displayName": "Jumptrace: Debug Info Highlighter",
-  "description": "A VS Code extension designed for developers, aiming to enhance the debugging experience through visualization. This plugin intelligently parses the correlation between assembly instruction addresses and source code line numbers from debug output (e.g., GDB, LLDB). It provides powerful bidirectional highlighting and navigation functionalities.",
+  "displayName": "%extension.displayName%",
+  "description": "%extension.description%", 
   "version": "0.0.1",
   "publisher": "flyingturtleovo", 
   "icon": "jumptrace.png",
@@ -41,38 +41,38 @@
     "commands": [
       {
         "command": "jumptrace.close",
-        "title": "Jumptrace: Close Mapping", 
+        "title": "%jumptrace.close.title%",
         "icon": "$(close)"
       },
       {
         "command": "jumptrace.switchover",
-        "title": "Jumptrace: Toggle Mapping Mode",
+        "title": "%jumptrace.switchover.title%",
         "icon": "$(sync)"
       }
     ],
     "configuration": {
-      "title": "jumptrace",
+      "title": "%configuration.title%",
       "properties": {
         "jumptrace.file_path": {
           "type": "string",
           "default": "",
-          "description": "Target file path"
+          "description": "%jumptrace.file_path.description%" 
         },
         "jumptrace.highlightBackgroundColor": {
           "type": "string",
           "default": "rgba(131, 247, 95, 0.3)",
-          "description": "The background color of the highlighted row",
+          "description": "%jumptrace.highlightBackgroundColor.description%" ,
           "scope": "resource"
         },
         "jumptrace.pathRegex": {
           "type": "string",
           "default": " ",
-          "description": "Filter the rows that match the path"
+          "description": "%jumptrace.pathRegex.description%"
         },
         "jumptrace.skipRegex": {
           "type": "string",
           "default": "^ ",
-          "description": "Skipped lines"
+          "description": "%jumptrace.skipRegex.description%"
         }
       }
     }

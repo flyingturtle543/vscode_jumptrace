@@ -11,6 +11,7 @@ This plugin is a code editor extension specifically designed for developers to e
 * **Bidirectional Assembly-Source Code Mapping**:
     * **From Assembly to Source Code**: When you select an assembly instruction in the debug view, the plugin will automatically jump to and highlight its corresponding line in the source code file.
     * **From Source Code to Assembly**: When you select a line of code in the source file, the plugin can display or navigate to its associated assembly instruction (if the debug information contains this mapping).
+* **Universal Encoding Support**: The plugin primarily reads debug information files using **UTF-8 encoding**. To provide stronger compatibility, the plugin will **automatically remove any null characters (`\u0000`)** that might be present in the file content before parsing. This helps in handling hidden character issues that may arise from certain tool outputs or improper encoding conversions (e.g., UTF-16 files being misread as UTF-8), ensuring regular expressions can match correctly.
 
 ## Example
 
@@ -44,6 +45,7 @@ You can configure the behavior of the `jumptrace` plugin in VS Code's `settings.
 ```json
 {
     // Target file path, typically the debug output or a file containing mapping relationships
+    // The plugin will attempt to read this file using UTF-8 encoding.
     // Supports the $workspaceFolder variable, e.g., "$workspaceFolder/build/debug_output.log"
     "jumptrace.file_path": "/path/to/your/debug_info_file.log",
 
@@ -51,6 +53,8 @@ You can configure the behavior of the `jumptrace` plugin in VS Code's `settings.
     "jumptrace.highlightBackgroundColor": "rgba(131, 247, 95, 0.3)",
 
     // Regular expression used to match debug output paths and line numbers
+    // The plugin will remove all null characters (\u0000) from the file content before matching,
+    // so your regular expression does not need to account for these hidden characters.
     // Customize this if your debug output format is specific.
     "jumptrace.pathRegex": "^([A-Za-z]:[\\\\/].*?):(\\d+)$",
 
@@ -58,9 +62,10 @@ You can configure the behavior of the `jumptrace` plugin in VS Code's `settings.
     // Lines matching this regex will not be processed by the plugin. By default, lines starting with whitespace are skipped.
     "jumptrace.skipRegex": "^\\s+",
 }
+
 ```
 ## Contributing
-We welcome contributions of all forms! If you have feature suggestions, found a bug, or wish to submit code, please visit our [GitHub repository address](https://github.com/flyingturtle543/vscode_jumptrace) and open an "Issue" or "Pull Request".
+We welcome contributions of all forms! If you have feature suggestions, found a bug, or wish to submit code, please visit our [GitHub](https://github.com/flyingturtle543/vscode_jumptrace) repository address and open an "Issue" or "Pull Request".
 
 ## License
-This plugin is released under the [e.g., MIT License]. Please refer to the LICENSE file for details.
+This plugin is released under the [MIT License](LICENSE). Please refer to the LICENSE file for details.
