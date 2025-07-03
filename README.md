@@ -37,25 +37,28 @@
 ## 配置示例
 您可以在VS Code的 `settings.json` 文件中配置 `jumptrace` 插件的行为。以下是可用的配置项及其示例：
 
-```json
-{
-    // 目标文件路径，通常是调试输出或包含映射关系的文件
-    // 支持使用 $workspaceFolder 变量，例如 "$workspaceFolder/build/debug_output.log"
-    "jumptrace.file_path": "/path/to/your/debug_info_file.log",
 
-    // 高亮行的背景颜色，可以使用CSS颜色格式（如rgba, #RRGGBB等）
-    "jumptrace.highlightBackgroundColor": "rgba(131, 247, 95, 0.3)",
-
-    // 用于匹配调试输出路径和行号的正则表达式
-    // 如果您的调试输出格式特殊，请自定义此项。
-    "jumptrace.pathRegex": "^([A-Za-z]:[\\\\/].*?):(\\d+)$",
-
-    // 用于跳过调试输出中不相关行的正则表达式
-    // 插件在匹配前会移除文件内容中的所有空字节（\u0000），因此您的正则表达式无需考虑这些隐藏字符。
-    // 匹配此正则表达式的行将不会被插件处理。默认跳过以空格开头的行。
-    "jumptrace.skipRegex": "^\\s+",
-}
+- 目标文件路径，通常是调试输出或包含映射关系的文件
+- 支持使用 $workspaceFolder 变量，例如 "$workspaceFolder/build/debug_output.log"
+```json 
+    "jumptrace.file_path": "/path/to/your/debug_info_file.log"
 ```
+- 高亮行的背景颜色，可以使用CSS颜色格式（如rgba, #RRGGBB等）
+```json
+    "jumptrace.highlightBackgroundColor": "rgba(131, 247, 95, 0.3)"
+```
+- 用于匹配调试输出路径和行号的正则表达式
+- 插件在匹配前会移除文件内容中的所有空字节（\u0000），因此您的正则表达式无需考虑这些隐藏字符。
+- 如果您的调试输出格式特殊，请自定义此项。
+```json
+    "jumptrace.pathRegex": "^([A-Za-z]:[\\\\/].*?):(\\d+)$"
+```
+- 用于跳过调试输出中不相关行的正则表达式
+- 匹配此正则表达式的行将不会被插件处理。默认跳过以空格开头的行。
+```json
+    "jumptrace.skipRegex": "^\\s+"
+```
+
 ## 贡献
 
 我们欢迎任何形式的贡献！如果您有功能建议、发现了bug或者希望提交代码，请随时访问我们的 [GitHub仓库地址](https://github.com/flyingturtle543/vscode_jumptrace) 并在“Issues”或“Pull Requests”中提出。

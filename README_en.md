@@ -42,28 +42,31 @@ Conversely, if you click on line `119` in the source code, the plugin can jump t
 
 You can configure the behavior of the `jumptrace` plugin in VS Code's `settings.json` file. The following are available configuration items and their examples:
 
+- Target file path, typically the debug output or a file containing mapping relationships
+- The plugin will attempt to read this file using UTF-8 encoding.
+- Supports the $workspaceFolder variable, e.g., "$workspaceFolder/build/debug_output.log"
 ```json
-{
-    // Target file path, typically the debug output or a file containing mapping relationships
-    // The plugin will attempt to read this file using UTF-8 encoding.
-    // Supports the $workspaceFolder variable, e.g., "$workspaceFolder/build/debug_output.log"
     "jumptrace.file_path": "/path/to/your/debug_info_file.log",
-
-    // Background color for highlighted lines, can use CSS color formats (e.g., rgba, #RRGGBB, etc.)
-    "jumptrace.highlightBackgroundColor": "rgba(131, 247, 95, 0.3)",
-
-    // Regular expression used to match debug output paths and line numbers
-    // The plugin will remove all null characters (\u0000) from the file content before matching,
-    // so your regular expression does not need to account for these hidden characters.
-    // Customize this if your debug output format is specific.
-    "jumptrace.pathRegex": "^([A-Za-z]:[\\\\/].*?):(\\d+)$",
-
-    // Regular expression used to skip irrelevant lines in debug output
-    // Lines matching this regex will not be processed by the plugin. By default, lines starting with whitespace are skipped.
-    "jumptrace.skipRegex": "^\\s+",
-}
-
 ```
+- Background color for highlighted lines, can use CSS color formats (e.g., rgba, #RRGGBB, etc.)
+```json
+    "jumptrace.highlightBackgroundColor": "rgba(131, 247, 95, 0.3)",
+```
+- Regular expression used to match debug output paths and line numbers
+- The plugin will remove all null characters (\u0000) from the file content before matching,
+so your regular expression does not need to account for these hidden characters.
+- Customize this if your debug output format is specific.
+```json
+    "jumptrace.pathRegex": "^([A-Za-z]:[\\\\/].*?):(\\d+)$",
+```
+- Regular expression used to skip irrelevant lines in debug output
+- Lines matching this regex will not be processed by the plugin. By default, lines starting with whitespace are skipped.
+```json
+    "jumptrace.skipRegex": "^\\s+"
+```
+
+
+
 ## Contributing
 We welcome contributions of all forms! If you have feature suggestions, found a bug, or wish to submit code, please visit our [GitHub](https://github.com/flyingturtle543/vscode_jumptrace) repository address and open an "Issue" or "Pull Request".
 
