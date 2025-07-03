@@ -15,7 +15,7 @@
 
 插件会识别出文件路径 `D:/data/100_flyingturtle/2_code/c++/windows/source/template/final/build/vcpkg_installed/x64-mingw-dynamic/include/boost/asio/execution_context.hpp` 和行号 `119`。它会将这些信息与汇编地址 `14000148b` 关联起来。
 
-当鼠标点击在 `14000148b` 地址时，插件会在您的代码编辑器中自动打开或切换到 `execution_context.hpp` 文件，并将第 `119` 行进行高亮显示，如下图所示（示例图，实际效果可能因编辑器主题而异）：
+当您点击汇编地址（或与特定行相关的代码范围，例如第 119 行）时，插件将自动在代码编辑器中打开或切换到 execution_context.hpp 文件，并将第 119 行进行高亮显示，如下图所示（示例图，实际效果可能因编辑器主题而异）。
 ![alt text](image-1.png)
 反之，如果您在源代码中点击了第 `119` 行，插件可以跳转到调试输出中对应的汇编指令并高亮。
 

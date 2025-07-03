@@ -19,7 +19,7 @@ This plugin is a code editor extension specifically designed for developers to e
 
 The plugin will identify the file path `D:/data/100_flyingturtle/2_code/c++/windows/source/template/final/build/vcpkg_installed/x64-mingw-dynamic/include/boost/asio/execution_context.hpp` and line number `119`. It will associate this information with the assembly address `14000148b`.
 
-When you click on the address `14000148b`, the plugin will automatically open or switch to the `execution_context.hpp` file in your code editor and highlight line `119`, as shown in the image below (example image, actual effect may vary depending on editor theme):
+When you click on an assembly address (or a code range associated with a specific line, e.g., line 119), the plugin will automatically open or switch to the execution_context.hpp file in your code editor and highlight line 119, as shown in the image below (example image, actual effect may vary depending on editor theme).
 ![alt text](image-1.png)
 Conversely, if you click on line `119` in the source code, the plugin can jump to the corresponding assembly instruction in the debug output and highlight it.
 
